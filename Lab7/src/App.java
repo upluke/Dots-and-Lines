@@ -26,6 +26,11 @@ public class App extends JFrame implements ActionListener {
         westPanel.add(buttonRun);
         add(westPanel, BorderLayout.WEST);
 
+
+        // WorkArea
+        WorkArea workArea = new WorkArea();
+        add(workArea, BorderLayout.CENTER);
+
     }
 
     public static void main(String[] args){
