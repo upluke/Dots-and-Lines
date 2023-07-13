@@ -14,11 +14,16 @@ public class App extends JFrame implements ActionListener {
         westPanel.setBackground(new Color(230,230,230));
         JCheckBox checkBoxCluster = new JCheckBox("Cluster - K-means");
         JCheckBox checkBoxLine = new JCheckBox("Line - Nearest Neighbor");
+        JButton buttonRun = new JButton("Run");
         checkBoxCluster.addActionListener(this);
         checkBoxLine.addActionListener(this);
+        buttonRun.addActionListener(this);
+
+
 
         westPanel.add(checkBoxCluster);
         westPanel.add(checkBoxLine);
+        westPanel.add(buttonRun);
         add(westPanel, BorderLayout.WEST);
 
     }
@@ -33,6 +38,12 @@ public class App extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getSource().getClass().getName() +" " + ((JCheckBox) e.getSource()).isSelected());
+        if(e.getSource().getClass().getName().equals("javax.swing.JCheckBox")){
+            System.out.println(e.getSource().getClass().getName() +" " + ((JCheckBox) e.getSource()).isSelected());
+        } else if (e.getSource().getClass().getName().equals("javax.swing.JCheckBox")) {
+            System.out.println(e.getSource().getClass().getName() +" " + ((JCheckBox) e.getSource()).isSelected());
+        }else{
+            System.out.println(e.getSource().getClass().getName() + " button here");
+        }
     }
 }
