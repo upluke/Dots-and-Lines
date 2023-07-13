@@ -22,29 +22,29 @@ public class WorkArea extends JPanel implements MouseListener {
         }
     }
 
+
+
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         dotX =e.getX();
         dotY =e.getY();
         System.out.println(e.getX() + " " + e.getY());
-
-        System.out.println(e.getXOnScreen() + " " + e.getYOnScreen());
+        System.out.println(e.getXOnScreen() + " on screen " + e.getYOnScreen());
         repaint();
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
-
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
+    public void mouseReleased(MouseEvent e) {
+        dotX =e.getX();
+        dotY =e.getY();
+        repaint();
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) {}
 
-    }
+    @Override
+    public void mouseExited(MouseEvent e) {}
+    @Override
+    public void mouseClicked(MouseEvent e) {}
 }
