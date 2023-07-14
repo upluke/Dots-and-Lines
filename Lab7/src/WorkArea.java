@@ -36,11 +36,12 @@ public class WorkArea extends JPanel implements MouseListener {
     public void run() {
         if(lineEnabled){
             lineHandler.setLineEnabled(true);
-            lineHandler.getClass();
+            lineHandler.calculate(getGraphics());
+            repaint();
         } else if(clusterEnabled) {
             clusterHandler.setClusterEnabled(true);
             clusterHandler.calculate();
-//            repaint();
+            repaint();
         } else {
             clusterHandler.setClusterEnabled(false);
             resetDotColors();
@@ -58,6 +59,9 @@ public class WorkArea extends JPanel implements MouseListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if(lineEnabled){
+            lineHandler.calculate(g);
+        }
         ArrayList<Dot> curDots = dataSource.getDots();
         for (Dot dot : curDots) {
             int dotSize = 10;

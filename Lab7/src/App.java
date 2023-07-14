@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class App extends JFrame implements ActionListener {
-    private ClusterHandler clusterHandler;
     private WorkArea workArea;
-    boolean isChecked = false;
 
     public App() {
         super("Lab 7");
