@@ -16,16 +16,20 @@ public class WorkArea extends JPanel implements MouseListener {
         super.paintComponent(g);
         ArrayList<Dot> curDots = DataSource.getDataSource().getDots();
         System.out.println(curDots);
-        for(Dot cd: curDots){
-            System.out.println("---" +cd);
-        }
-        if (dotX != -1 && dotY != -1) {
-            g.setColor(Color.white);
-            // adjust the alignment of the dot to fix if the dot is slightly off to the right of the mouse pointer
+        for(Dot dot: curDots){
+//            System.out.println("---" +dot);
             int dotSize = 10;
             int dotOffset = dotSize / 2;
-            g.fillOval(dotX - dotOffset, dotY - dotOffset, dotSize, dotSize);
+            g.setColor(dot.getColor());
+            g.fillOval(dot.getx() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
         }
+//        if (dotX != -1 && dotY != -1) {
+//            g.setColor(Color.white);
+//            // adjust the alignment of the dot to fix if the dot is slightly off to the right of the mouse pointer
+//            int dotSize = 10;
+//            int dotOffset = dotSize / 2;
+//            g.fillOval(dotX - dotOffset, dotY - dotOffset, dotSize, dotSize);
+//        }
     }
 
 
@@ -34,16 +38,14 @@ public class WorkArea extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         dotX =e.getX();
         dotY =e.getY();
-        System.out.println(e.getX() + " " + e.getY());
-        System.out.println(e.getXOnScreen() + " on screen " + e.getYOnScreen());
-        repaint();
+//        repaint();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         dotX =e.getX();
         dotY =e.getY();
-        Dot newDot = new Dot(dotX, dotY, Color.white);
+        Dot newDot = new Dot(dotX, dotY, Color.yellow);
         DataSource.getDataSource().add(newDot);
         repaint();
     }
