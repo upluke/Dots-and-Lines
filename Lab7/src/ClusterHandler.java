@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ClusterHandler implements Observer {
-    ArrayList<Dot> clusterDots = new ArrayList<>();
+    // ArrayList<Dot> clusterDots = new ArrayList<>();
     private boolean clusterEnabled;
     public void calculate(){
         if (!clusterEnabled) {
@@ -21,7 +21,6 @@ public class ClusterHandler implements Observer {
         int middleX = totalX / 2;
 
         System.out.println("Middle X Position: " + middleX);
-        int curColor;
 
         if(size==2) {
             dots.get(0).setColor(Color.red);
@@ -42,7 +41,7 @@ public class ClusterHandler implements Observer {
     }
 
     public void setClusterEnabled(boolean enabled) {
-        clusterEnabled = enabled;
+        this.clusterEnabled = enabled;
     }
 
 

@@ -7,14 +7,20 @@ import java.util.ArrayList;
 public class WorkArea extends JPanel implements MouseListener {
     private DataSource dataSource;
     private boolean clusterEnabled;
+    private boolean lineEnabled;
     private ClusterHandler clusterHandler;
+    private LineHandler lineHandler;
+
 
     public WorkArea() {
         setBackground(Color.DARK_GRAY);
         addMouseListener(this);
         dataSource = DataSource.getDataSource();
         clusterHandler = new ClusterHandler();
+        lineHandler = new LineHandler();
         dataSource.addObserver(clusterHandler);
+        dataSource.addObserver(lineHandler);
+
     }
 
     public void setClusterEnabled(boolean enabled) {
@@ -22,11 +28,19 @@ public class WorkArea extends JPanel implements MouseListener {
         repaint();
     }
 
+    public void setLineEnabled(boolean enabled){
+        lineEnabled = enabled;
+        repaint();
+    }
+
     public void run() {
-        if (clusterEnabled) {
+        if(lineEnabled){
+            lineHandler.setLineEnabled(true);
+            lineHandler.getClass();
+        } else if(clusterEnabled) {
             clusterHandler.setClusterEnabled(true);
             clusterHandler.calculate();
-            repaint();
+//            repaint();
         } else {
             clusterHandler.setClusterEnabled(false);
             resetDotColors();

@@ -50,10 +50,9 @@ public class App extends JFrame implements ActionListener {
                 System.out.println(e.getActionCommand() + " " + ((JCheckBox) e.getSource()).isSelected());
                 workArea.setClusterEnabled(((JCheckBox) e.getSource()).isSelected());
 
-
             } else {
-                // TODO implement check box "Line - Nearest Neighbor" later
-
+                System.out.println(e.getActionCommand() + " " + ((JCheckBox) e.getSource()).isSelected());
+                workArea.setLineEnabled(((JCheckBox) e.getSource()).isSelected());
             }
 
         } else {
