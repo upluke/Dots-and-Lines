@@ -10,12 +10,15 @@ public class WorkArea extends JPanel implements MouseListener {
     public WorkArea(){
         setBackground(Color.DARK_GRAY);
         addMouseListener(this);
+        DataSource dataSource = DataSource.getDataSource();
+        Clusterhandler clusterhandler = new Clusterhandler();
+        dataSource.addObserver(clusterhandler);
     }
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         ArrayList<Dot> curDots = DataSource.getDataSource().getDots();
-        System.out.println(curDots);
+        System.out.println(curDots.size());
         for(Dot dot: curDots){
 //            System.out.println("---" +dot);
             int dotSize = 10;
@@ -23,6 +26,7 @@ public class WorkArea extends JPanel implements MouseListener {
             g.setColor(dot.getColor());
             g.fillOval(dot.getx() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
         }
+        // single dot testing:
 //        if (dotX != -1 && dotY != -1) {
 //            g.setColor(Color.white);
 //            // adjust the alignment of the dot to fix if the dot is slightly off to the right of the mouse pointer

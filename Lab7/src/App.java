@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class App extends JFrame implements ActionListener {
+
+    private WorkArea workArea;
     public App(){
         super("Lab 7");
 
@@ -19,8 +21,6 @@ public class App extends JFrame implements ActionListener {
         checkBoxLine.addActionListener(this);
         buttonRun.addActionListener(this);
 
-
-
         westPanel.add(checkBoxCluster);
         westPanel.add(checkBoxLine);
         westPanel.add(buttonRun);
@@ -28,7 +28,7 @@ public class App extends JFrame implements ActionListener {
 
 
         // WorkArea
-        WorkArea workArea = new WorkArea();
+        workArea = new WorkArea();
         add(workArea, BorderLayout.CENTER);
 
     }
@@ -44,7 +44,11 @@ public class App extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().getClass().getName().equals("javax.swing.JCheckBox")){
-            System.out.println(e.getSource().getClass().getName() +" " + ((JCheckBox) e.getSource()).isSelected());
+             if(e.getActionCommand().equals("Cluster - K-means")){
+                System.out.println(e.getActionCommand() +" " + ((JCheckBox) e.getSource()).isSelected());
+                Clusterhandler clusterhandler = new Clusterhandler();
+            }
+
         } else if (e.getSource().getClass().getName().equals("javax.swing.JCheckBox")) {
             System.out.println(e.getSource().getClass().getName() +" " + ((JCheckBox) e.getSource()).isSelected());
         }else{
