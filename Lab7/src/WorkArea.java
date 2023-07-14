@@ -11,6 +11,7 @@ public class WorkArea extends JPanel implements MouseListener {
     private ClusterHandler clusterHandler;
     private LineHandler lineHandler;
 
+    private boolean isRunBtnClicked =false;
 
     public WorkArea() {
         setBackground(Color.DARK_GRAY);
@@ -34,18 +35,27 @@ public class WorkArea extends JPanel implements MouseListener {
     }
 
     public void run() {
+        isRunBtnClicked =true;
         if(lineEnabled){
             lineHandler.setLineEnabled(true);
             lineHandler.calculate(getGraphics());
-            repaint();
-        } else if(clusterEnabled) {
+
+
+        }else{
+            lineHandler.setLineEnabled(false);
+            isRunBtnClicked=false;
+            resetDotColors();
+        }
+
+        if(clusterEnabled) {
             clusterHandler.setClusterEnabled(true);
             clusterHandler.calculate();
-            repaint();
-        } else {
+
+        }else{
             clusterHandler.setClusterEnabled(false);
             resetDotColors();
         }
+       repaint();
     }
 
     private void resetDotColors() {
@@ -53,15 +63,13 @@ public class WorkArea extends JPanel implements MouseListener {
         for (Dot dot : dots) {
             dot.setColor(Color.YELLOW);
         }
-        repaint();
+
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(lineEnabled){
-            lineHandler.calculate(g);
-        }
+
         ArrayList<Dot> curDots = dataSource.getDots();
         for (Dot dot : curDots) {
             int dotSize = 10;
@@ -69,16 +77,22 @@ public class WorkArea extends JPanel implements MouseListener {
             g.setColor(dot.getColor());
             g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
         }
+        if(lineEnabled & isRunBtnClicked){
+            lineHandler.calculate(g);
+            isRunBtnClicked=false;
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         int dotX = e.getX();
         int dotY = e.getY();
+        if( !clusterEnabled & !lineEnabled){
+            Dot newDot = new Dot(dotX, dotY, Color.YELLOW);
+            dataSource.add(newDot);
+            repaint();
+        }
 
-        Dot newDot = new Dot(dotX, dotY, Color.YELLOW);
-        dataSource.add(newDot);
-        repaint();
     }
 
     @Override
