@@ -4,16 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class App extends JFrame implements ActionListener {
-
+    private ClusterHandler clusterHandler;
     private WorkArea workArea;
-    public App(){
+    boolean isChecked = false;
+
+    public App() {
         super("Lab 7");
 
         // west panel
         setLayout(new BorderLayout());
         JPanel westPanel = new JPanel();
-        westPanel.setLayout(new GridLayout(12,1));
-        westPanel.setBackground(new Color(230,230,230));
+        westPanel.setLayout(new GridLayout(12, 1));
+        westPanel.setBackground(new Color(230, 230, 230));
         JCheckBox checkBoxCluster = new JCheckBox("Cluster - K-means");
         JCheckBox checkBoxLine = new JCheckBox("Line - Nearest Neighbor");
         JButton buttonRun = new JButton("Run");
@@ -33,26 +35,31 @@ public class App extends JFrame implements ActionListener {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         App win = new App();
 
         win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        win.setSize(1000,600);
+        win.setSize(1000, 600);
         win.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().getClass().getName().equals("javax.swing.JCheckBox")){
-             if(e.getActionCommand().equals("Cluster - K-means")){
-                System.out.println(e.getActionCommand() +" " + ((JCheckBox) e.getSource()).isSelected());
-                Clusterhandler clusterhandler = new Clusterhandler();
+        if (e.getSource().getClass().getName().equals("javax.swing.JCheckBox")) {
+            if (e.getActionCommand().equals("Cluster - K-means")) {
+                System.out.println(e.getActionCommand() + " " + ((JCheckBox) e.getSource()).isSelected());
+                workArea.setClusterEnabled(((JCheckBox) e.getSource()).isSelected());
+
+
+            } else {
+                // TODO implement check box "Line - Nearest Neighbor" later
+
             }
 
-        } else if (e.getSource().getClass().getName().equals("javax.swing.JCheckBox")) {
-            System.out.println(e.getSource().getClass().getName() +" " + ((JCheckBox) e.getSource()).isSelected());
-        }else{
+        } else {
             System.out.println(e.getSource().getClass().getName() + " button here");
+            workArea.run();
         }
     }
+
 }

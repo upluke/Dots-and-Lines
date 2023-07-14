@@ -11,7 +11,7 @@ public class Dot {
         this.color = color;
     }
 
-    public int getx(){
+    public int getX(){
         return this.x;
     }
 

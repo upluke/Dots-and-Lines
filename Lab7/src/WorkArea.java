@@ -5,60 +5,73 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class WorkArea extends JPanel implements MouseListener {
-    private int dotX =-1;
-    private int dotY =-1;
-    public WorkArea(){
+    private DataSource dataSource;
+    private boolean clusterEnabled;
+    private ClusterHandler clusterHandler;
+
+    public WorkArea() {
         setBackground(Color.DARK_GRAY);
         addMouseListener(this);
-        DataSource dataSource = DataSource.getDataSource();
-        Clusterhandler clusterhandler = new Clusterhandler();
-        dataSource.addObserver(clusterhandler);
+        dataSource = DataSource.getDataSource();
+        clusterHandler = new ClusterHandler();
+        dataSource.addObserver(clusterHandler);
     }
+
+    public void setClusterEnabled(boolean enabled) {
+        clusterEnabled = enabled;
+        repaint();
+    }
+
+    public void run() {
+        if (clusterEnabled) {
+            clusterHandler.setClusterEnabled(true);
+            clusterHandler.calculate();
+            repaint();
+        } else {
+            clusterHandler.setClusterEnabled(false);
+            resetDotColors();
+        }
+    }
+
+    private void resetDotColors() {
+        ArrayList<Dot> dots = dataSource.getDots();
+        for (Dot dot : dots) {
+            dot.setColor(Color.YELLOW);
+        }
+        repaint();
+    }
+
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ArrayList<Dot> curDots = DataSource.getDataSource().getDots();
-        System.out.println(curDots.size());
-        for(Dot dot: curDots){
-//            System.out.println("---" +dot);
+        ArrayList<Dot> curDots = dataSource.getDots();
+        for (Dot dot : curDots) {
             int dotSize = 10;
             int dotOffset = dotSize / 2;
             g.setColor(dot.getColor());
-            g.fillOval(dot.getx() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
+            g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
         }
-        // single dot testing:
-//        if (dotX != -1 && dotY != -1) {
-//            g.setColor(Color.white);
-//            // adjust the alignment of the dot to fix if the dot is slightly off to the right of the mouse pointer
-//            int dotSize = 10;
-//            int dotOffset = dotSize / 2;
-//            g.fillOval(dotX - dotOffset, dotY - dotOffset, dotSize, dotSize);
-//        }
     }
-
-
 
     @Override
     public void mousePressed(MouseEvent e) {
-        dotX =e.getX();
-        dotY =e.getY();
-//        repaint();
+        int dotX = e.getX();
+        int dotY = e.getY();
+
+        Dot newDot = new Dot(dotX, dotY, Color.YELLOW);
+        dataSource.add(newDot);
+        repaint();
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        dotX =e.getX();
-        dotY =e.getY();
-        Dot newDot = new Dot(dotX, dotY, Color.yellow);
-        DataSource.getDataSource().add(newDot);
-        repaint();
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
     public void mouseEntered(MouseEvent e) {}
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
     @Override
     public void mouseClicked(MouseEvent e) {}
 }

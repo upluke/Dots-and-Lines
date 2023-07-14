@@ -26,6 +26,7 @@ public class DataSource extends Observable {
         dots.add(dot);
         setChanged();
         notifyObservers();
+
     }
 
     public int size(){
