@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class WorkArea extends JPanel implements MouseListener {
     private DataSource dataSource;
@@ -49,29 +50,6 @@ public class WorkArea extends JPanel implements MouseListener {
         }
     }
 
-    public void run() {
-//        isRunBtnClicked =true;
-//        if(lineEnabled){
-//            lineHandler.setLineEnabled(true);
-//            lineHandler.calculate(getGraphics());
-//
-//
-//        }else{
-//            lineHandler.setLineEnabled(false);
-//            isRunBtnClicked=false;
-//            resetDotColors();
-//        }
-//
-//        if(clusterEnabled) {
-//            clusterHandler.setClusterEnabled(true);
-//            clusterHandler.calculate();
-//
-//        }else{
-//            clusterHandler.setClusterEnabled(false);
-//            resetDotColors();
-//        }
-       repaint();
-    }
 
 //    private void resetDotColors(ArrayList<Dot> dots) {
 //        for (Dot dot : dots) {
@@ -86,10 +64,25 @@ public class WorkArea extends JPanel implements MouseListener {
         super.paintComponent(g);
 
         ArrayList<Dot> curDots = dataSource.getDots();
-
+        LinkedList<Point> lines = DataSource.getDataSource().getLines();
+        System.out.println("HEre is the size...."+lines.size());
         // if lineEnabled is true
         if(lineEnabled){
-            //TODO iterate lines
+
+            for(int i =1;i<lines.size();i++){
+                System.out.println(lines.get(i-1) + " ::: " +lines.get(i));
+                Double x1 = lines.get(i-1).getX();
+                Double y1 = lines.get(i-1).getY();
+                Double x2 = lines.get(i).getX();
+                Double y2 = lines.get(i).getY();
+                g.drawLine(Integer.valueOf(x1.intValue()),
+                        Integer.valueOf(y1.intValue()),
+                        Integer.valueOf(x2.intValue()),
+                        Integer.valueOf(y2.intValue()));
+
+            }
+            System.out.println("");
+            System.out.println("");
         }
 
         System.out.println("run button: "+isRunBtnClicked);
@@ -107,7 +100,8 @@ public class WorkArea extends JPanel implements MouseListener {
             g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
         }
         if(isRunBtnClicked){
-            repaint();
+
+//            repaint();
         }
 
         setRunBtnClicked(false);
