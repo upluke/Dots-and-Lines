@@ -24,42 +24,48 @@ public class WorkArea extends JPanel implements MouseListener {
 
     }
 
+    public boolean getClusterEnabled(){
+        return this.clusterEnabled;
+    }
+
+    public boolean getLineEnabled(){
+        return this.lineEnabled;
+    }
     public void setClusterEnabled(boolean enabled) {
         clusterEnabled = enabled;
-        repaint();
+//        repaint();
     }
 
     public void setLineEnabled(boolean enabled){
         lineEnabled = enabled;
-        repaint();
+//        repaint();
     }
 
     public void run() {
-        isRunBtnClicked =true;
-        if(lineEnabled){
-            lineHandler.setLineEnabled(true);
-            lineHandler.calculate(getGraphics());
-
-
-        }else{
-            lineHandler.setLineEnabled(false);
-            isRunBtnClicked=false;
-            resetDotColors();
-        }
-
-        if(clusterEnabled) {
-            clusterHandler.setClusterEnabled(true);
-            clusterHandler.calculate();
-
-        }else{
-            clusterHandler.setClusterEnabled(false);
-            resetDotColors();
-        }
+//        isRunBtnClicked =true;
+//        if(lineEnabled){
+//            lineHandler.setLineEnabled(true);
+//            lineHandler.calculate(getGraphics());
+//
+//
+//        }else{
+//            lineHandler.setLineEnabled(false);
+//            isRunBtnClicked=false;
+//            resetDotColors();
+//        }
+//
+//        if(clusterEnabled) {
+//            clusterHandler.setClusterEnabled(true);
+//            clusterHandler.calculate();
+//
+//        }else{
+//            clusterHandler.setClusterEnabled(false);
+//            resetDotColors();
+//        }
        repaint();
     }
 
-    private void resetDotColors() {
-        ArrayList<Dot> dots = dataSource.getDots();
+    private void resetDotColors(ArrayList<Dot> dots) {
         for (Dot dot : dots) {
             dot.setColor(Color.YELLOW);
         }
@@ -69,29 +75,46 @@ public class WorkArea extends JPanel implements MouseListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         ArrayList<Dot> curDots = dataSource.getDots();
+
+        // if clusterEnabled is true
+        if(clusterEnabled){
+            for (Dot dot : curDots) {
+                int dotSize = 10;
+                int dotOffset = dotSize / 2;
+                g.setColor(dot.getColor());
+                g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
+            }
+        }else{
+            resetDotColors(curDots);
+        }
+        // if lineEnabled is true
+        if(lineEnabled){
+            //TODO iterate lines
+        }
+
         for (Dot dot : curDots) {
             int dotSize = 10;
             int dotOffset = dotSize / 2;
             g.setColor(dot.getColor());
             g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
         }
-        if(lineEnabled & isRunBtnClicked){
-            lineHandler.calculate(g);
-            isRunBtnClicked=false;
-        }
+
+//        if(lineEnabled & isRunBtnClicked){
+//            lineHandler.calculate(g);
+//            isRunBtnClicked=false;
+//        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         int dotX = e.getX();
         int dotY = e.getY();
-        if( !clusterEnabled & !lineEnabled){
-            Dot newDot = new Dot(dotX, dotY, Color.YELLOW);
-            dataSource.add(newDot);
-            repaint();
-        }
+
+        Dot newDot = new Dot(dotX, dotY, Color.YELLOW);
+        dataSource.add(newDot);
+        repaint();
+
 
     }
 

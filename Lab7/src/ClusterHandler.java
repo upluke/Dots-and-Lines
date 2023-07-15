@@ -5,22 +5,19 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ClusterHandler implements Observer {
-    // ArrayList<Dot> clusterDots = new ArrayList<>();
-    private boolean clusterEnabled;
+//    private boolean clusterEnabled;
     public void calculate(){
-        if (!clusterEnabled) {
-            return;
-        }
+//        if (!clusterEnabled) {
+//            return;
+//        }
         ArrayList<Dot> dots=DataSource.getDataSource().getDots();
         int size=DataSource.getDataSource().size();
 
         System.out.println("cluster: "+ dots+ " size:" + size);
-//        Color[] colors = {Color.red, Color.blue};
 
         int totalX = 812;
         int middleX = totalX / 2;
 
-        System.out.println("Middle X Position: " + middleX);
 
         if(size==2) {
             dots.get(0).setColor(Color.red);
@@ -40,9 +37,7 @@ public class ClusterHandler implements Observer {
 
     }
 
-    public void setClusterEnabled(boolean enabled) {
-        this.clusterEnabled = enabled;
-    }
+
 
 
 

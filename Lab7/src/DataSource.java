@@ -5,6 +5,8 @@ import java.util.Observable;
 public class DataSource extends Observable {
     private ArrayList<Dot> dots;
     private static DataSource instance;
+
+
     private DataSource(){
         dots = new ArrayList<>();
 
@@ -28,6 +30,7 @@ public class DataSource extends Observable {
         notifyObservers();
 
     }
+
 
     public int size(){
         return dots.size();
