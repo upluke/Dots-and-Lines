@@ -55,7 +55,8 @@ public class App extends JFrame implements ActionListener {
 
         } else {
             System.out.println(e.getSource().getClass().getName() + " button here");
-            workArea.run();
+//            workArea.run();
+            workArea.setRunBtnClicked(true);
         }
     }
 
