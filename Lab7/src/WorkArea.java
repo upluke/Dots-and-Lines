@@ -11,7 +11,7 @@ public class WorkArea extends JPanel implements MouseListener {
     private ClusterHandler clusterHandler;
     private LineHandler lineHandler;
 
-    private boolean isRunBtnClicked =false;
+    private boolean isRunBtnClicked;
 
     public WorkArea() {
         setBackground(Color.DARK_GRAY);
@@ -43,6 +43,10 @@ public class WorkArea extends JPanel implements MouseListener {
 
     public void setRunBtnClicked(boolean clicked){
         this.isRunBtnClicked  =clicked;
+//        repaint();
+        if(isRunBtnClicked){
+            repaint();
+        }
     }
 
     public void run() {
@@ -69,41 +73,41 @@ public class WorkArea extends JPanel implements MouseListener {
        repaint();
     }
 
-    private void resetDotColors(ArrayList<Dot> dots) {
-        for (Dot dot : dots) {
-            dot.setColor(Color.YELLOW);
-        }
-
-    }
+//    private void resetDotColors(ArrayList<Dot> dots) {
+//        for (Dot dot : dots) {
+//            dot.setColor(Color.YELLOW);
+//            System.out.println("reset");
+//        }
+//
+//    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         ArrayList<Dot> curDots = dataSource.getDots();
 
-        // if clusterEnabled is true
-        if(clusterEnabled & isRunBtnClicked){
-            for (Dot dot : curDots) {
-                int dotSize = 10;
-                int dotOffset = dotSize / 2;
-                g.setColor(dot.getColor());
-                g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
-            }
-
-        }else{
-            resetDotColors(curDots);
-        }
         // if lineEnabled is true
         if(lineEnabled){
             //TODO iterate lines
         }
 
+        System.out.println("run button: "+isRunBtnClicked);
 
         for (Dot dot : curDots) {
             int dotSize = 10;
             int dotOffset = dotSize / 2;
-            g.setColor(dot.getColor());
+
+            if(!clusterEnabled ) {
+                g.setColor(Color.yellow);
+            }else{ // if clusterEnabled is true
+                g.setColor(dot.getColor());
+            }
+            System.out.println(dot.getColor());
             g.fillOval(dot.getX() - dotOffset, dot.getY() - dotOffset, dotSize, dotSize);
+        }
+        if(isRunBtnClicked){
+            repaint();
         }
 
         setRunBtnClicked(false);
@@ -114,13 +118,12 @@ public class WorkArea extends JPanel implements MouseListener {
         int dotX = e.getX();
         int dotY = e.getY();
         if(!clusterEnabled && !lineEnabled) {
-            System.out.println("in in in cluster: "+ clusterEnabled+ " line:" + lineEnabled);
             Dot newDot = new Dot(dotX, dotY, Color.YELLOW);
             dataSource.add(newDot);
-
+            repaint();
 
         }
-        repaint();
+
 
     }
 
