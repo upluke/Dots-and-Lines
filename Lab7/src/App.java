@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 
 public class App extends JFrame implements ActionListener {
     private WorkArea workArea;
-
+    private JCheckBox checkBoxCluster;
+    private JCheckBox checkBoxLine;
     public App() {
         super("Lab 7");
 
@@ -14,16 +15,19 @@ public class App extends JFrame implements ActionListener {
         JPanel westPanel = new JPanel();
         westPanel.setLayout(new GridLayout(12, 1));
         westPanel.setBackground(new Color(230, 230, 230));
-        JCheckBox checkBoxCluster = new JCheckBox("Cluster - K-means");
-        JCheckBox checkBoxLine = new JCheckBox("Line - Nearest Neighbor");
+        checkBoxCluster = new JCheckBox("Cluster - K-means");
+        checkBoxLine = new JCheckBox("Line - Nearest Neighbor");
         JButton buttonRun = new JButton("Run");
+        JButton buttonReset = new JButton("Reset");
         checkBoxCluster.addActionListener(this);
         checkBoxLine.addActionListener(this);
         buttonRun.addActionListener(this);
+        buttonReset.addActionListener(this);
 
         westPanel.add(checkBoxCluster);
         westPanel.add(checkBoxLine);
         westPanel.add(buttonRun);
+        westPanel.add(buttonReset);
         add(westPanel, BorderLayout.WEST);
 
 
@@ -53,8 +57,18 @@ public class App extends JFrame implements ActionListener {
             }
 
         } else {
-            workArea.setRunBtnClicked(true);
-            workArea.setIsEditable(true);
+            if(e.getActionCommand().equals("Run")){
+                workArea.setRunBtnClicked(true);
+                workArea.setIsEditable(true);
+            }else{
+                workArea.resetWorkArea();
+                checkBoxCluster.setSelected(false);
+                checkBoxLine.setSelected(false);
+
+
+
+            }
+
 
         }
     }

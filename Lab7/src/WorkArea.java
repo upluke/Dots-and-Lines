@@ -46,6 +46,19 @@ public class WorkArea extends JPanel implements MouseListener {
         }
     }
 
+    public void resetWorkArea(){
+
+//        System.out.println("clusterEnabled: " + clusterEnabled+ " lineEnabled: " + lineEnabled + " isEdiable: " +isEditable);
+        dataSource.getDots().clear();
+        dataSource.getLines().clear();
+        setClusterEnabled(false);
+        setLineEnabled(false);
+        setIsEditable(true);
+        repaint();
+        revalidate();
+
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
