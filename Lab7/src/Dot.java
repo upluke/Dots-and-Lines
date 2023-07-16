@@ -27,9 +27,4 @@ public class Dot {
         this.color=color;
     }
 
-//    public void drawConnect(Dot nextDot, Graphics g){
-//        g.setColor(Color.white);
-//        g.drawLine(x, y, nextDot.x, nextDot.y);
-//    }
-
 }

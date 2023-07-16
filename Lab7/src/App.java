@@ -45,18 +45,17 @@ public class App extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().getClass().getName().equals("javax.swing.JCheckBox")) {
             if (e.getActionCommand().equals("Cluster - K-means")) {
-                System.out.println(e.getActionCommand() + " " + ((JCheckBox) e.getSource()).isSelected());
                 workArea.setClusterEnabled(((JCheckBox) e.getSource()).isSelected());
-
+                workArea.setIsEditable(false);
             } else {
-                System.out.println(e.getActionCommand() + " " + ((JCheckBox) e.getSource()).isSelected());
                 workArea.setLineEnabled(((JCheckBox) e.getSource()).isSelected());
+                workArea.setIsEditable(false);
             }
 
         } else {
-            System.out.println(e.getSource().getClass().getName() + " button here");
-//            workArea.run();
             workArea.setRunBtnClicked(true);
+            workArea.setIsEditable(true);
+
         }
     }
 
